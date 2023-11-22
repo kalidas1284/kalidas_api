@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+<body>
+    <h1 class="text-primary text-center" >Users Data</h1>
+<div  id="result" class="row justify-content-between" >
+    <div class="col-4"></div>
+    <div class="col-4"></div>
+    <div class="col-4"></div>
+</div>
+   
+<script>
+
+
+
+
+
+const request =new XMLHttpRequest();
+
+///connect or API CALL
+request.open('get','https://jsonplaceholder.typicode.com/users')
+
+//send 
+request.send()
+request.onreadystatechange=()=>{
+if(request.readyState==4){
+    if(request.status>199 && request.status<300){
+        console.log(request.responseText);
+        //object
+        let arrayToDo=JSON.parse(request.responseText)
+        console.log(arrayToDo);
+        displayArray(arrayToDo);
+        
+        
+    }
+    else{
+        alert('Failed To connect To jsonplaceholder')
+    }
+
+}
+
+}
+
+function displayArray(arrayToDo){
+for(let todo of arrayToDo){
+htmlData=` <div class="card mt-3 border border-2 border-primary" style="width: 18rem; ">
+             
+        <div class="card-body">
+          <h5 class="card-title">User Data</h5>
+          
+        </div>
+        <ul class="list-group list-group-flush">
+              <li class="list-group-item">ID: ${todo.id}</li>
+          <li class="list-group-item">username: ${todo.name}</li>
+           <li class="list-group-item">Email: ${todo.email}</li>
+           <li class="list-group-item"><b>Adress:</b>
+           <br>
+           street: ${todo.address.street}
+           <br>
+           Suite:${todo.address.suite}
+           city:${todo.address.city}
+           zipcode:${todo.address.zipcode}</li>
+           <li class="list-group-item"><b>Geo:</b>
+           <br>
+           lat:${todo.address.geo.lat}<br>
+           lan:${todo.address.geo.lng}</li>
+           <li class="list-group-item">Phone: ${todo.phone}</li>
+           <li class="list-group-item">Website: ${todo.website}</li>
+           <br>
+           <li class="list-group-item"><b>Company:</b><br>
+           Name:${todo.company.name}<br>
+           CatchPhrase:${todo.company.catchPhrase}<br>
+           Bs:${todo.company.bs}</li>
+
+
+
+       </ul>
+       
+        </div>
+      </div>
+
+`
+result.innerHTML+=htmlData
+}
+}
+
+</script>
+</html>
